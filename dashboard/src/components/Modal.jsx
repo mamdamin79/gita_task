@@ -35,12 +35,8 @@ export default function Modal({work,icon,user}) {
     switch (work) {
         case "افزودن":
             try {
-                const res = await axios.post("https://gita-task.liara.run/users",{
-                    ...data
-                })
-                console.log(res)
                 reset()
-                setUsers([...users,res.data])
+                setUsers([...users,data])
                 closeModal();        
             } catch (error) {
                 console.log(error)
@@ -50,18 +46,12 @@ export default function Modal({work,icon,user}) {
             closeModal();        
         break;
         case "ویرایش":
-            const res = await axios.put(`https://gita-task.liara.run/users/${user.id}`,{
-                    ...data,chartData:user.chartData
-                })
-                setUsers([...users.filter(item=>item.id !== user.id),res.data])
+                setUsers([...users.filter(item=>item.id !== user.id),data])
                 closeModal();
             break;
         case "حذف":
-            const reponse = await axios.delete(`https://gita-task.liara.run/users/${user.id}`)
-            reset()
             setUsers(users.filter(item=>item.id !== user.id ))
             closeModal();
-           
             break;
         default:
             break;
